@@ -1,0 +1,49 @@
+<section>
+  <form
+    autocomplete="off"
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    fxLayoutGap="10px"
+    [formGroup]="loginForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <mat-form-field hideRequiredMarker>
+      <input
+        type="email"
+        matInput
+        placeholder="Email"
+        name="email"
+        formControlName="email"
+      />
+      <mat-hint>Please enter a valid email</mat-hint>
+      <mat-error>Invalid or missing email</mat-error>
+    </mat-form-field>
+
+    <mat-form-field hideRequiredMarker>
+      <input
+        type="password"
+        matInput
+        placeholder="Password"
+        name="password"
+        formControlName="password"
+      />
+      <mat-hint>Please enter your password</mat-hint>
+      <mat-error>Missing password</mat-error>
+    </mat-form-field>
+
+    <button
+      *ngIf="!(isLoading$ | async)"
+      type="submit"
+      class="mat-elevation-z5"
+      mat-raised-button
+      color="primary"
+      [disabled]="loginForm.invalid || loginForm.pristine"
+    >
+      Login
+    </button>
+  </form>
+
+  <div fxLayoutAlign="center center">
+    <mat-spinner *ngIf="(isLoading$ | async)"></mat-spinner>
+  </div>
+</section>

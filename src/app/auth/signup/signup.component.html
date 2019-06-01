@@ -1,0 +1,84 @@
+<section>
+  <form
+    autocomplete="off"
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    fxLayoutGap="10px"
+    #f="ngForm"
+    (ngSubmit)="onSubmit(f)"
+  >
+    <mat-form-field hideRequiredMarker>
+      <input
+        type="email"
+        name="email"
+        matInput
+        placeholder="Your email"
+        ngModel
+        email
+        required
+        #em="ngModel"
+      />
+      <mat-error *ngIf="em.hasError('required')"
+        >Field must not be empty</mat-error
+      >
+      <mat-error *ngIf="em.hasError('email')">Email is invalid</mat-error>
+    </mat-form-field>
+
+    <mat-form-field
+      hideRequiredMarker
+      hintLabel="Should be at least 6 characters."
+    >
+      <input
+        type="password"
+        name="password"
+        matInput
+        placeholder="Your Password"
+        ngModel
+        required
+        minlength="6"
+        #pw="ngModel"
+      />
+      <mat-hint align="end">{{ pw.value?.length }} / 6</mat-hint>
+      <mat-error *ngIf="pw.hasError('required')"
+        >Field must not be empty</mat-error
+      >
+    </mat-form-field>
+
+    <mat-form-field hideRequiredMarker>
+      <input
+        matInput
+        name="birhdate"
+        placeholder="Your birthdate"
+        [matDatepicker]="picker"
+        ngModel
+        required
+        #bd="ngModel"
+        [max]="maxDate"
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="bd.hasError('required')"
+        >Field must not be empty or invalid</mat-error
+      >
+    </mat-form-field>
+
+    <mat-checkbox color="primary" ngModel name="agree" required
+      >Agree to Terms and Condition.</mat-checkbox
+    >
+
+    <button
+      *ngIf="!(isLoading$ | async)"
+      type="submit"
+      class="mat-elevation-z5"
+      [disabled]="f.invalid || f.pristine"
+      mat-raised-button
+      color="primary"
+    >
+      Signup
+    </button>
+  </form>
+
+  <div fxLayoutAlign="center center">
+    <mat-spinner *ngIf="(isLoading$ | async)"></mat-spinner>
+  </div>
+</section>

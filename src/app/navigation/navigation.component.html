@@ -1,0 +1,102 @@
+<mat-sidenav-container>
+  <mat-sidenav #sidenav role="navigation">
+    <mat-nav-list>
+      <a
+        *ngIf="(isAuth$ | async)"
+        mat-list-item
+        [routerLink]="['/training']"
+        [routerLinkActive]="['active']"
+        (click)="sidenav.close()"
+      >
+        <mat-icon>fitness_center</mat-icon>
+        <span>Training</span>
+      </a>
+
+      <a
+        *ngIf="!(isAuth$ | async)"
+        mat-list-item
+        [routerLink]="['/signup']"
+        [routerLinkActive]="['active']"
+        (click)="sidenav.close()"
+      >
+        <mat-icon>face</mat-icon>
+        <span>Signup</span>
+      </a>
+
+      <a
+        *ngIf="!(isAuth$ | async)"
+        mat-list-item
+        [routerLink]="['/login']"
+        [routerLinkActive]="['active']"
+        (click)="sidenav.close()"
+      >
+        <mat-icon>input</mat-icon>
+        <span>Login</span>
+      </a>
+
+      <a
+        *ngIf="(isAuth$ | async)"
+        mat-list-item
+        (click)="onLogout(); sidenav.close()"
+      >
+        <mat-icon>power_settings_new</mat-icon>
+        <span>Logout</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <div fxHide.gt-xs>
+        <button mat-icon-button (click)="sidenav.open()">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </div>
+
+      <div fxFlex fxLayoutAlign="start start">
+        <a [routerLink]="['/']" [routerLinkActive]="['active']">VSNA</a>
+      </div>
+
+      <div fxFlex fxLayout fxLayoutAlign="end" fxHide.xs fxLayoutGap="10px">
+        <button
+          *ngIf="(isAuth$ | async)"
+          mat-button
+          [routerLink]="['/training']"
+          [routerLinkActive]="['active']"
+        >
+          <mat-icon>fitness_center</mat-icon>
+          <span>Training</span>
+        </button>
+        <button
+          *ngIf="!(isAuth$ | async)"
+          mat-button
+          [routerLink]="['/signup']"
+          [routerLinkActive]="['active']"
+        >
+          <mat-icon>face</mat-icon>
+          <span>Signup</span>
+        </button>
+        <button
+          *ngIf="!(isAuth$ | async)"
+          mat-button
+          [routerLink]="['/login']"
+          [routerLinkActive]="['active']"
+        >
+          <mat-icon>input</mat-icon>
+          <span>Login</span>
+        </button>
+        <button *ngIf="(isAuth$ | async)" mat-button (click)="onLogout()">
+          <mat-icon>power_settings_new</mat-icon>
+          <span>Logout</span>
+        </button>
+      </div>
+    </mat-toolbar>
+
+    <main>
+      <router-outlet></router-outlet>
+      <!-- <div *ngIf="(isLoading$ | async)" fxLayoutAlign="center center">
+        <mat-spinner></mat-spinner>
+      </div> -->
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>
